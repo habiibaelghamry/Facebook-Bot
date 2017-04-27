@@ -39,7 +39,7 @@ function sendGenericMessage(sender) {
                 "elements": [{
                     "title": "First card",
                     "subtitle": "Element #1 of an hscroll",
-                    "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
+                    "image_url": "https://www.w3schools.com/css/img_fjords.jpg",
                     "buttons": [{
                         "type": "web_url",
                         "url": "https://www.messenger.com",
@@ -52,7 +52,7 @@ function sendGenericMessage(sender) {
                 }, {
                     "title": "Second card",
                     "subtitle": "Element #2 of an hscroll",
-                    "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
+                    "image_url": "https://www.w3schools.com/css/img_fjords.jpg",
                     "buttons": [{
                         "type": "postback",
                         "title": "Postback",
@@ -90,11 +90,11 @@ app.post('/webhook/', function (req, res) {
                 sendGenericMessage(sender)
                 continue
             }
-            sendTextMessage(sender, "Text received, echo: " + text)
+            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
         }
         if (event.postback) {
             text = JSON.stringify(event.postback)
-            sendTextMessage(sender, "Postback received: "+text, token)
+            sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
             continue
         }
     }
