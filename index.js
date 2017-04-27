@@ -39,7 +39,7 @@ function sendGenericMessage(sender) {
                 "elements": [{
                     "title": "First card",
                     "subtitle": "Element #1 of an hscroll",
-                    "image_url": "https://www.w3schools.com/css/img_fjords.jpg",
+                    "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRz_71-NhGGOxjDxb_QVkxTzSkMCI0IaFAPfW8Z4uAA6hJfKIp",
                     "buttons": [{
                         "type": "web_url",
                         "url": "https://www.messenger.com",
