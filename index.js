@@ -8,7 +8,7 @@ var http = require ('http')       // For serving a basic web page.
 // const MONGO_HOST = 'localhost';
 // app.set('mongo_url', 'mongodb://'+MONGO_HOST+'/local');
 
-mongoose.connect('mongodb://localhost/fasa7ny');
+mongoose.connect('mongodb://127.0.0.1/fasa7ny');
 
  app.set('port', (process.env.PORT || 5000))
 
