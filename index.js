@@ -5,21 +5,21 @@ var app = express()
 var mongoose = require('mongoose')
 var http = require ('http')       // For serving a basic web page.
     
-app.set('port', (process.env.PORT || 5000))
-const MONGO_HOST = 'localhost';
-app.set('mongo_url', 'mongodb://'+MONGO_HOST+'/local');
+ app.set('port', (process.env.PORT || 5000))
+// const MONGO_HOST = 'localhost';
+// app.set('mongo_url', 'mongodb://'+MONGO_HOST+'/local');
 
-// var db = mongoose.connect('mongodb://localhost/fasa7ny');
+mongoose.connect('mongodb://localhost/fasa7ny');
 
 
 
-mongoose.connect(app.get('mongo_url'),function(err){
-	if (err) {
-		console.error(err);
-		process.exit(1);
-	}
-	console.log("connected to " + app.get('mongo_url'));
-});
+// mongoose.connect(app.get('mongo_url'),function(err){
+// 	if (err) {
+// 		console.error(err);
+// 		process.exit(1);
+// 	}
+// 	console.log("connected to " + app.get('mongo_url'));
+// });
 
 // Process application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}))
