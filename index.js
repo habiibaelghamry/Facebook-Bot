@@ -45,10 +45,16 @@ function sendGenericMessage(sender) {
                         "title": "General Info",
                         "payload": "getGeneralInfo"
 
-                    }, {
+                    }, 
+                    {
                         "type": "postback",
-                        "title": "Check our events",
+                        "title": "Check Our Events",
                         "payload": "getEvents",
+                    },
+                    {
+                        "type": "postback",
+                        "title": "Check Our Facilities",
+                        "payload": "getFacilities",
                     },
                     {
                         "type": "postback",
@@ -114,11 +120,24 @@ app.post('/webhook/', function (req, res) {
             	fetch('http://54.187.92.64:3000/business/b/BreakOut')
             	.then(res => res.json())
             	.then(json => {
-            		// sendTextMessage(sender, )
-            	})
-               sendTextMessage(sender, "Ahe el events", token)
+            		console.log("Eventss")
+            		sendTextMessage(sender, json.events,token)
+            	});
             	continue	
             }
+
+             else if(text.substring(0,200)== '{"payload":"getFacilities"}'){
+
+            	fetch('http://54.187.92.64:3000/business/b/BreakOut')
+            	.then(res => res.json())
+            	.then(json => {
+            		console.log("Facilities")
+            		sendTextMessage(sender, json.facilities,token)
+            	});
+               sendTextMessage(sender, "Ahe el facilities", token)
+            	continue	
+            }
+
             else if(text.substring(0,200)== '{"payload":"getContacts"}'){
             	 fetch('http://54.187.92.64:3000/business/b/BreakOut')
 			.then(res => res.json())
