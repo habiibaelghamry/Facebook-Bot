@@ -9,7 +9,7 @@ var mongoose = require('mongoose')
 // const MONGO_HOST = (process.env.MONGO_HOST || 'localhost');
 // app.set('mongo_url', (process.env.MONGODB_URL || 'mongodb://'+MONGO_HOST+'/local'));
 mongoose.Promise = global.Promise;
-var db = mongoose.connect('mongodb://localhost:27017/fasa7ny');
+var db = mongoose.connect('mongodb://localhost/fasa7ny');
 
 
 
