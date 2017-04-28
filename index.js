@@ -92,18 +92,19 @@ app.post('/webhook/', function (req, res) {
         }
         if (event.postback) {
             text = JSON.stringify(event.postback)
-            if(text.substring(0,200).payload == "getGeneralInfo"){
-            sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
-            continue
-            }
-            else if(text.contains("getEvents")){
-               sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
-            	continue	
-            }
-            else if(text.payload == "getContacts"){
-            	sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
-            	continue
-            }
+            sendTextMessage(sender, "Postback received: "+text.substring(0, 200).payload, token)
+            // if(text.substring(0,200).payload == "getGeneralInfo"){
+            // sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
+            // continue
+            // }
+            // else if(text.substring(0,200).contains("getEvents")){
+            //    sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
+            // 	continue	
+            // }
+            // else if(text.payload == "getContacts"){
+            // 	sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
+            // 	continue
+            // }
            
         }
     }
