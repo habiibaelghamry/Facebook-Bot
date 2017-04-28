@@ -181,7 +181,8 @@ app.post('/webhook/', function (req, res) {
             	fetch('http://54.187.92.64:3000/business/b/BreakOut')
             	.then(res => res.json())
             	.then(json => {
-            		console.log("Facilities")
+            		console.log("Facilities");
+            		console.log(json.facilities);
             		sendTextMessage(sender, json.facilities,token)
             	});
                
