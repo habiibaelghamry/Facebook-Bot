@@ -115,16 +115,16 @@ app.post('/webhook/', function (req, res) {
 				});
             continue
             }
-            else if(text.substring(0,200)== '{"payload":"getEvents"}'){
+            // else if(text.substring(0,200)== '{"payload":"getEvents"}'){
 
-            	fetch('http://54.187.92.64:3000/business/b/BreakOut')
-            	.then(res => res.json())
-            	.then(json => {
-            		console.log("Eventss")
-            		sendTextMessage(sender, json.events,token)
-            	});
-            	continue	
-            }
+            // 	fetch('http://54.187.92.64:3000/business/b/BreakOut')
+            // 	.then(res => res.json())
+            // 	.then(json => {
+            // 		console.log("Eventss")
+            // 		sendTextMessage(sender, json.events,token)
+            // 	});
+            // 	continue	
+            // }
 
             //  else if(text.substring(0,200)== '{"payload":"getFacilities"}'){
 
