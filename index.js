@@ -5,12 +5,12 @@ var app = express()
 var mongoose = require('mongoose')
 var http = require ('http')       // For serving a basic web page.
     
- app.set('port', (process.env.PORT || 5000))
 // const MONGO_HOST = 'localhost';
 // app.set('mongo_url', 'mongodb://'+MONGO_HOST+'/local');
 
 mongoose.connect('mongodb://localhost/fasa7ny');
 
+ app.set('port', (process.env.PORT || 5000))
 
 
 // mongoose.connect(app.get('mongo_url'),function(err){
