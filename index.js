@@ -39,7 +39,7 @@ function sendGenericMessage(sender) {
                 "template_type": "generic",
                 "elements": [{
                     "title": "Ahlan Ahlan",
-                    "image_url": "./breakout.png",
+                    "image_url": "https://media-cdn.tripadvisor.com/media/photo-s/07/3f/a2/83/icon.jpg",
                     "buttons": [{
                         "type": "postback",
                         "title": "General Info",
