@@ -88,24 +88,24 @@ app.post('/webhook/', function (req, res) {
                 sendGenericMessage(sender)
                 continue
             }
-            sendTextMessage(sender, "Ya Basha ana Bot, doos 3al buttons! ")
+            sendTextMessage(sender, "Ya Basha ana Bot, doos 3al buttons aw ektb Hi! ")
         }
         if (event.postback) {
         	// '{"payload":"getGeneralInfo"}'
             text = JSON.stringify(event.postback)
             // sendTextMessage(sender, "Postback received: "+text.substring(0, 200).payload, token)
             if(text.substring(0,200)== '{"payload":"getGeneralInfo"}'){
-            sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
+            sendTextMessage(sender, "General Info hena... ", token)
             continue
             }
-            // else if(text.substring(0,200).contains("getEvents")){
-            //    sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
-            // 	continue	
-            // }
-            // else if(text.payload == "getContacts"){
-            // 	sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
-            // 	continue
-            // }
+            else if(text.substring(0,200)== '{"payload":"getEvents"}'){
+               sendTextMessage(sender, "Ahe el events", token)
+            	continue	
+            }
+            else if(text.substring(0,200)== '{"payload":"getContacts"}'){
+            	sendTextMessage(sender, "Ana msh 3ayzak tkalmny", token)
+            	continue
+            }
            
         }
     }
