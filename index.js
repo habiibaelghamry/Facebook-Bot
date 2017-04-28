@@ -2,24 +2,28 @@ var express = require('express')
 var bodyParser = require('body-parser');
 var request = require('request');
 var app = express();
-var mongoose = require('mongoose');
-var http = require ('http');       // For serving a basic web page.
-    
-// const MONGO_HOST = 'localhost';
-// app.set('mongo_url', 'mongodb://'+MONGO_HOST+'/local');
+var mongoose = require ("mongoose"); // The reason for this demo.
 
-// mongoose.connect('mongodb://murmuring-island-17546.herokuapp.com/local');
+    // Here we find an appropriate database to connect to, defaulting to
+    // localhost if we don't find one.
+    var uristring =
+    process.env.MONGOLAB_URI ||
+    process.env.MONGOHQ_URL ||
+    'mongodb://localhost/HelloMongoose';
 
- app.set('port', (process.env.PORT || 5000))
+    // The http server will listen to an appropriate port, or default to
+    // port 5000.
+    var theport = process.env.PORT || 5000;
 
-
-// mongoose.connect(app.get('mongo_url'),function(err){
-// 	if (err) {
-// 		console.error(err);
-// 		process.exit(1);
-// 	}
-// 	console.log("connected to " + app.get('mongo_url'));
-// });
+    // Makes connection asynchronously.  Mongoose will queue up database
+    // operations and release them when the connection is complete.
+    mongoose.connect(uristring, function (err, res) {
+      if (err) {
+      console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+      } else {
+      console.log ('Succeeded connected to: ' + uristring);
+      }
+    });
 
 // Process application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}))
