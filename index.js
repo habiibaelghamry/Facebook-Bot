@@ -51,11 +51,7 @@ function sendGenericMessage(sender) {
                         "title": "Check Our Events",
                         "payload": "getEvents",
                     },
-                    {
-                        "type": "postback",
-                        "title": "Check Our Facilities",
-                        "payload": "getFacilities",
-                    },
+                   
                     {
                         "type": "postback",
                         "title": "Contact Us",
@@ -115,28 +111,28 @@ app.post('/webhook/', function (req, res) {
 				});
             continue
             }
-            // else if(text.substring(0,200)== '{"payload":"getEvents"}'){
+            else if(text.substring(0,200)== '{"payload":"getEvents"}'){
 
-            // 	fetch('http://54.187.92.64:3000/business/b/BreakOut')
-            // 	.then(res => res.json())
-            // 	.then(json => {
-            // 		console.log("Eventss")
-            // 		sendTextMessage(sender, json.events,token)
-            // 	});
-            // 	continue	
-            // }
+            	fetch('http://54.187.92.64:3000/business/b/BreakOut')
+            	.then(res => res.json())
+            	.then(json => {
+            		console.log("Eventss")
+            		sendTextMessage(sender, json.events,token)
+            	});
+            	continue	
+            }
 
-            //  else if(text.substring(0,200)== '{"payload":"getFacilities"}'){
+             else if(text.substring(0,200)== '{"payload":"getFacilities"}'){
 
-            // 	fetch('http://54.187.92.64:3000/business/b/BreakOut')
-            // 	.then(res => res.json())
-            // 	.then(json => {
-            // 		console.log("Facilities")
-            // 		sendTextMessage(sender, json.facilities,token)
-            // 	});
+            	fetch('http://54.187.92.64:3000/business/b/BreakOut')
+            	.then(res => res.json())
+            	.then(json => {
+            		console.log("Facilities")
+            		sendTextMessage(sender, json.facilities,token)
+            	});
                
-            // 	continue	
-            // }
+            	continue	
+            }
 
             else if(text.substring(0,200)== '{"payload":"getContacts"}'){
             	 fetch('http://54.187.92.64:3000/business/b/BreakOut')
