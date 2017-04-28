@@ -6,8 +6,8 @@ var mongoose = require('mongoose')
 var http = require ('http')       // For serving a basic web page.
     
 app.set('port', (process.env.PORT || 5000))
-const MONGO_HOST = (process.env.MONGO_HOST || 'localhost');
-app.set('mongo_url', (process.env.MONGODB_URL || 'mongodb://'+MONGO_HOST+'/local'));
+const MONGO_HOST = 'localhost';
+app.set('mongo_url', 'mongodb://'+MONGO_HOST+'/local');
 
 // var db = mongoose.connect('mongodb://localhost/fasa7ny');
 
