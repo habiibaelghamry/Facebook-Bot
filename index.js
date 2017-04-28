@@ -31,6 +31,54 @@ app.listen(app.get('port'), function() {
 })
 
 
+function sendHagatMessage(sender) {
+    messageData = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title": "Ahlan Ahlan",
+                    "image_url": "https://media-cdn.tripadvisor.com/media/photo-s/07/3f/a2/83/icon.jpg",
+                    "buttons": [{
+                        "type": "postback",
+                        "title": "Check Our Facilities",
+                        "payload": "getFacilities"
+
+                    }, 
+                    {
+                        "type": "postback",
+                        "title": "Check Our Events",
+                        "payload": "getEvents"
+                    },
+                   
+                    {
+                        "type": "postback",
+                        "title": "Check Our Offers",
+                        "payload": "getOffers"
+                    }],
+                }]
+            }
+        }
+    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
+
+
 function sendGenericMessage(sender) {
     messageData = {
         "attachment": {
@@ -48,14 +96,14 @@ function sendGenericMessage(sender) {
                     }, 
                     {
                         "type": "postback",
-                        "title": "Check Our Events",
-                        "payload": "getEvents",
+                        "title": "Check Our Hagat",
+                        "payload": "getHagat"
                     },
                    
                     {
                         "type": "postback",
                         "title": "Contact Us",
-                        "payload": "getContacts",
+                        "payload": "getContacts"
                     }],
                 }]
             }
@@ -111,14 +159,20 @@ app.post('/webhook/', function (req, res) {
 				});
             continue
             }
-            else if(text.substring(0,200)== '{"payload":"getEvents"}'){
+            else if(text.substring(0,200)== '{"payload":"getHagat"}'){
+
+            	sendHagatMessage(sender)
+            	continue	
+            }
+             else if(text.substring(0,200)== '{"payload":"getEvents"}'){
 
             	fetch('http://54.187.92.64:3000/business/b/BreakOut')
             	.then(res => res.json())
             	.then(json => {
-            		console.log("Eventss")
+            		console.log("Events")
             		sendTextMessage(sender, json.events,token)
             	});
+               
             	continue	
             }
 
@@ -132,6 +186,13 @@ app.post('/webhook/', function (req, res) {
             	});
                
             	continue	
+            }
+
+             else if(text.substring(0,200)== '{"payload":"getOffers"}'){
+            
+				sendTextMessage(sender,"Offers",token);
+			
+            continue
             }
 
             else if(text.substring(0,200)== '{"payload":"getContacts"}'){
