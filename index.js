@@ -13,13 +13,13 @@ app.set('mongo_url', 'mongodb://'+MONGO_HOST+'/local');
 
 
 
-mongoose.connect(app.get('mongo_url'),function(err){
-	if (err) {
-		console.error(err);
-		process.exit(1);
-	}
-	console.log("connected to " + app.get('mongo_url'));
-});
+// mongoose.connect(app.get('mongo_url'),function(err){
+// 	if (err) {
+// 		console.error(err);
+// 		process.exit(1);
+// 	}
+// 	console.log("connected to " + app.get('mongo_url'));
+// });
 
 // Process application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}))
