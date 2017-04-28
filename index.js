@@ -103,7 +103,7 @@ app.post('/webhook/', function (req, res) {
 				{
 					console.log("AHLAAAANNN");
 					console.log(json);
-					sendTextMessage(sender,"Heeeeeih "+json[0],token);
+					sendTextMessage(sender,"Heeeeeih "+json.result,token);
 				});
             // sendTextMessage(sender, "General Info hena... ", token)
             continue
