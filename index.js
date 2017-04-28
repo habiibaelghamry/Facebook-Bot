@@ -99,8 +99,8 @@ app.post('/webhook/', function (req, res) {
 
             fetch('http://54.187.92.64:3000/business/b/BreakOut')
 			.then(res => res.json())
-			.then(json => sendTextMessage(sender,json,token));
-            sendTextMessage(sender, "General Info hena... ", token)
+			.then(json => sendTextMessage(sender,"Heeeeeih "+json,token));
+            // sendTextMessage(sender, "General Info hena... ", token)
             continue
             }
             else if(text.substring(0,200)== '{"payload":"getEvents"}'){
