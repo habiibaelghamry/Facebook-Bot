@@ -2,8 +2,22 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var request = require('request')
 var app = express()
+var mongoose = require('mongoose');
+var Booking = mongoose.model('Booking');
+
 
 app.set('port', (process.env.PORT || 5000))
+const MONGO_HOST = (process.env.MONGO_HOST || '54.187.92.64');
+app.set('mongo_url', (process.env.MONGODB_URL || 'mongodb://'+MONGO_HOST+'/fasa7ny'));
+
+
+mongoose.connect(app.get('mongo_url'),function(err){
+	if (err) {
+		console.error(err);
+		process.exit(1);
+	}
+	console.log("connected to " + app.get('mongo_url'));
+});
 
 // Process application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}))
@@ -124,6 +138,9 @@ function sendTextMessage(sender, text) {
         }
     })
 }
+
+var booking = new Booking ({});
+booking.save();
 
 
 
