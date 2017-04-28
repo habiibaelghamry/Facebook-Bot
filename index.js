@@ -8,7 +8,7 @@ var http = require ('http')       // For serving a basic web page.
 // const MONGO_HOST = 'localhost';
 // app.set('mongo_url', 'mongodb://'+MONGO_HOST+'/local');
 
-mongoose.connect();
+mongoose.connect('mongodb://murmuring-island-17546.herokuapp.com/local');
 
  app.set('port', (process.env.PORT || 5000))
 
