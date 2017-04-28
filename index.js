@@ -1,9 +1,9 @@
 var express = require('express')
-var bodyParser = require('body-parser')
-var request = require('request')
-var app = express()
-var mongoose = require('mongoose')
-var http = require ('http')       // For serving a basic web page.
+var bodyParser = require('body-parser');
+var request = require('request');
+var app = express();
+var mongoose = require('mongoose');
+var http = require ('http');       // For serving a basic web page.
     
 // const MONGO_HOST = 'localhost';
 // app.set('mongo_url', 'mongodb://'+MONGO_HOST+'/local');
