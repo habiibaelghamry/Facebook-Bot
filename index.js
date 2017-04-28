@@ -119,12 +119,25 @@ app.post('/webhook/', function (req, res) {
             continue
             }
             else if(text.substring(0,200)== '{"payload":"getEvents"}'){
+
+            	fetch('http://54.187.92.64:3000/business/b/BreakOut')
+            	.then(res => res.json())
+            	.then(json => {
+            		// sendTextMessage(sender, )
+            	})
                sendTextMessage(sender, "Ahe el events", token)
             	continue	
             }
             else if(text.substring(0,200)== '{"payload":"getContacts"}'){
-            	sendTextMessage(sender, "Ana msh 3ayzak tkalmny", token)
-            	continue
+            	 fetch('http://54.187.92.64:3000/business/b/BreakOut')
+			.then(res => res.json())
+			.then(json => 
+				{
+					console.log("Contactsss");
+					console.log(json);
+					sendTextMessage(sender,"Email: " + json.result.email + "\n Phone numbers: " + json.result.phones,token);
+				});
+            continue
             }
            
         }
