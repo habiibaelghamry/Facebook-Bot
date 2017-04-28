@@ -99,7 +99,12 @@ app.post('/webhook/', function (req, res) {
 
             fetch('http://54.187.92.64:3000/business/b/BreakOut')
 			.then(res => res.json())
-			.then(json => {sendTextMessage(sender,"Heeeeeih "+json[0],token)});
+			.then(json => 
+				{
+					console.log("AHLAAAANNN");
+					console.log(json);
+					sendTextMessage(sender,"Heeeeeih "+json[0],token);
+				});
             // sendTextMessage(sender, "General Info hena... ", token)
             continue
             }
