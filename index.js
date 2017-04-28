@@ -92,15 +92,15 @@ app.post('/webhook/', function (req, res) {
         }
         if (event.postback) {
             text = JSON.stringify(event.postback)
-            if(text == "getGeneralInfo"){
+            if(text.payload == "getGeneralInfo"){
             sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
             continue
             }
-            else if(text == "getEvents"){
+            else if(text.payload == "getEvents"){
                sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
             	continue	
             }
-            else if(text == "getContacts"){
+            else if(text.payload == "getContacts"){
             	sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
             	continue
             }
