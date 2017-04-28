@@ -1,7 +1,10 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var request = require('request')
-var app = express()
+var app = express();
+
+
+app.set('port', (process.env.PORT || 5000))
 
 // Process application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}))
@@ -122,7 +125,6 @@ function sendTextMessage(sender, text) {
         }
     })
 }
-
 
 
 
