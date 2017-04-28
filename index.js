@@ -1,6 +1,7 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var request = require('request')
+var fetch = require('node-fetch')
 var app = express()
 
 app.set('port', (process.env.PORT || 5000))
@@ -95,6 +96,10 @@ app.post('/webhook/', function (req, res) {
             text = JSON.stringify(event.postback)
             // sendTextMessage(sender, "Postback received: "+text.substring(0, 200).payload, token)
             if(text.substring(0,200)== '{"payload":"getGeneralInfo"}'){
+
+            fetch('http://54.187.92.64:3000/business/b/BreakOut')
+			.then(res => res.json())
+			.then(json => sendTextMessage(sender,json,token));
             sendTextMessage(sender, "General Info hena... ", token)
             continue
             }
