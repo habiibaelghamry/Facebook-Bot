@@ -4,7 +4,16 @@ var request = require('request');
 var app = express();
 var mongoose = require ("mongoose"); // The reason for this demo.
 
-    // Here we find an appropriate database to connect to, defaulting to
+
+
+// Process application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({extended: false}))
+
+// Process application/json
+app.use(bodyParser.json())
+
+
+// Here we find an appropriate database to connect to, defaulting to
     // localhost if we don't find one.
     var uristring =
     process.env.MONGOLAB_URI ||
@@ -24,12 +33,6 @@ var mongoose = require ("mongoose"); // The reason for this demo.
       console.log ('Succeeded connected to: ' + uristring);
       }
     });
-
-// Process application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({extended: false}))
-
-// Process application/json
-app.use(bodyParser.json())
 
 // Index route
 app.get('/', function (req, res) {
