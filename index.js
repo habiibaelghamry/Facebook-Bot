@@ -103,7 +103,17 @@ app.post('/webhook/', function (req, res) {
 				{
 					console.log("AHLAAAANNN");
 					console.log(json);
-					sendTextMessage(sender,"Heeeeeih "+JSON.stringify(json.result),token);
+
+					// {"_id":"59039263cde23e5ff1acf58c","email":"habiiba.elghamry@gmail.com","merchant_ID":"1234",
+					// "name":"BreakOut","__v":1,"address":"Lala Land yemeen fi shemal",
+					// "area":"Lala Land","description":"I have the prettiest description in the world.",
+					// "delete":0,"images":[],"reviews":[],"subscribers":[],"payment_methods"😞"Cash"],
+					// "public":0,"average_rating":0,"category"😞"Thrill"],"phones"😞"01159552584"],
+					// "user_type":2,"local":{"username":"breakout",
+					// "password":"$2a$08$sEwBmhctp36dbo6tmxzq8uqi9lCXkPPazjT8vioEqaA7pypFcyKKK"}}
+					sendTextMessage(sender,"Description: " + json.result.description + "\n Address: " + json.result.address +
+						"\n Area: " + json.result.area + "\n Fasa7ny Average Rating: " + json.result.average_rating
+						,token);
 				});
             // sendTextMessage(sender, "General Info hena... ", token)
             continue
