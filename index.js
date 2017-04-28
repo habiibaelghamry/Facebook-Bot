@@ -39,24 +39,21 @@ function sendGenericMessage(sender) {
                 "elements": [{
                     "title": "First card",
                     "subtitle": "Element #1 of an hscroll",
-                    "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRz_71-NhGGOxjDxb_QVkxTzSkMCI0IaFAPfW8Z4uAA6hJfKIp",
-                    "buttons": [{
-                        "type": "web_url",
-                        "url": "https://www.messenger.com",
-                        "title": "web url"
-                    }, {
-                        "type": "postback",
-                        "title": "Postback",
-                        "payload": "Payload for first element in a generic bubble",
-                    }],
-                }, {
-                    "title": "Second card",
-                    "subtitle": "Element #2 of an hscroll",
                     "image_url": "https://www.w3schools.com/css/img_fjords.jpg",
                     "buttons": [{
                         "type": "postback",
-                        "title": "Postback",
-                        "payload": "Payload for second element in a generic bubble",
+                        "title": "General Info",
+                        "payload": "getGeneralInfo"
+
+                    }, {
+                        "type": "postback",
+                        "title": "Check our events",
+                        "payload": "getEvents",
+                    },
+                    {
+                        "type": "postback",
+                        "title": "Contact Us",
+                        "payload": "getContacts",
                     }],
                 }]
             }
@@ -85,17 +82,29 @@ app.post('/webhook/', function (req, res) {
         event = req.body.entry[0].messaging[i]
         sender = event.sender.id
         if (event.message && event.message.text) {
+
             text = event.message.text
-            if (text === 'Generic') {
+            if (text === 'Hi') {
                 sendGenericMessage(sender)
                 continue
             }
-            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            sendTextMessage(sender, "Ya Basha ana Bot, doos 3al buttons! ")
         }
         if (event.postback) {
             text = JSON.stringify(event.postback)
+            if(text == "getGeneralInfo"){
             sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
             continue
+            }
+            else if(text == "getEvents"){
+               sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
+            	continue	
+            }
+            else if(text == "getContacts"){
+            	sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
+            	continue
+            }
+           
         }
     }
     res.sendStatus(200)
