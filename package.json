@@ -1,6 +1,7 @@
 {
   "name": "bot",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,18 +11,6 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
-    "mongodb": "^2.2.26",
-    "mongoose": "^4.9.6",
     "request": "^2.81.0"
-  },
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/habiibaelghamry/Bot.git"
-  },
-  "bugs": {
-    "url": "https://github.com/habiibaelghamry/Bot/issues"
-  },
-  "homepage": "https://github.com/habiibaelghamry/Bot#readme",
-  "description": ""
+  }
 }
