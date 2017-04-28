@@ -2,7 +2,7 @@ var express = require('express')
 var bodyParser = require('body-parser');
 var request = require('request');
 var app = express();
-var mongoose = require ("mongoose"); // The reason for this demo.
+var mongoose = require ("mongoose"); 
 
 
 
@@ -33,26 +33,7 @@ app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
 
-// Here we find an appropriate database to connect to, defaulting to
-    // localhost if we don't find one.
-    var uristring =
-    process.env.MONGOLAB_URI ||
-    process.env.MONGOHQ_URL ||
-    'mongodb://localhost:27017/HelloMongoose';
 
-    // The http server will listen to an appropriate port, or default to
-    // port 5000.
-    var port = process.env.PORT || 5000;
-
-    // Makes connection asynchronously.  Mongoose will queue up database
-    // operations and release them when the connection is complete.
-    mongoose.connect(uristring, function (err, res) {
-      if (err) {
-      console.log ('ERROR connecting to: ' + uristring + '. ' + err);
-      } else {
-      console.log ('Succeeded connected to: ' + uristring);
-      }
-    });
 
 
 function sendGenericMessage(sender) {
