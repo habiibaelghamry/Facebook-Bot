@@ -170,7 +170,7 @@ app.post('/webhook/', function (req, res) {
             	.then(res => res.json())
             	.then(json => {
             		console.log("Events")
-            		sendTextMessage(sender, json.events,token)
+            		sendTextMessage(sender, json.events,token);
             	});
                
             	continue	
@@ -183,7 +183,7 @@ app.post('/webhook/', function (req, res) {
             	.then(json => {
             		console.log("Facilities");
             		console.log(json.facilities);
-            		sendTextMessage(sender, json.facilities,token)
+            		sendTextMessage(sender, JSON.stringify(json.facilities),token);
             	});
                
             	continue	
