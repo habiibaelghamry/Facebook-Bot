@@ -5,9 +5,13 @@ var app = express()
 var mongoose = require('mongoose')
 
 
-app.set('port', (process.env.PORT || 5000))
-const MONGO_HOST = (process.env.MONGO_HOST || 'localhost');
-app.set('mongo_url', (process.env.MONGODB_URL || 'mongodb://'+MONGO_HOST+'/local'));
+// app.set('port', (process.env.PORT || 5000))
+// const MONGO_HOST = (process.env.MONGO_HOST || 'localhost');
+// app.set('mongo_url', (process.env.MONGODB_URL || 'mongodb://'+MONGO_HOST+'/local'));
+mongoose.Promise = global.Promise;
+var db = mongoose.connect('mongodb://localhost:27017/fasa7ny');
+
+
 
 // mongoose.connect(app.get('mongo_url'),function(err){
 // 	if (err) {
