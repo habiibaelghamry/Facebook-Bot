@@ -210,8 +210,7 @@ app.post('/webhook/', function (req, res) {
 				{
 					// console.log("Contactsss");
 					// console.log(json);
-					sendTextMessage(sender,"Email: " + json.result.email,token);
-					getPhones(sender,json.result.phones);
+					getPhones(sender,json.result.phones,json.result.email);
 				});
             continue
             } 
@@ -500,12 +499,13 @@ function getDailyEvents(sender, events, eventoccs, name) {
 }
 
 
-function getPhones(sender, phones) {
+function getPhones(sender, phones,email) {
 	var cards = phones.length;
     var elem = [];
     for(var l = 0; l < phones.length; l++) {
     	elem.push({
-			"title": "Phone Numbers",
+			"title": "Email",
+			"subtitle": email,
 			"image_url": "https://media-cdn.tripadvisor.com/media/photo-s/07/3f/a2/83/icon.jpg",
 			"buttons" : [
 					{
