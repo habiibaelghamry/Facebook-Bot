@@ -467,7 +467,7 @@ function getDailyEvents(sender, events, eventoccs, name) {
 			"image_url": "https://media-cdn.tripadvisor.com/media/photo-s/07/3f/a2/83/icon.jpg",
 			"buttons" : [{
                         "type": "web_url",
-                        "url": "https://54.187.92.64:8000/#!/viewOccurences/"+events[l]._id,
+                        "url": "http://54.187.92.64:8000/#!/viewOccurences/"+events[l]._id,
                         "title": "View Occurrences"
                     }]
 		})
