@@ -518,6 +518,7 @@ function getPhones(sender, phones) {
             }]
         }
     }
+}
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
@@ -534,7 +535,7 @@ function getPhones(sender, phones) {
         }
     })
 }
-}
+
 
 
 
