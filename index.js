@@ -45,13 +45,13 @@ function sendHagatMessage(sender) {
                         "title": "Check Our Facilities",
                         "payload": "getFacilities"
 
-                    }, 
+                    },
                     {
                         "type": "postback",
                         "title": "Check Our Events",
                         "payload": "getEvents"
                     },
-                   
+
                     {
                         "type": "postback",
                         "title": "Check Our Offers",
@@ -93,13 +93,13 @@ function sendGenericMessage(sender) {
                         "title": "General Info",
                         "payload": "getGeneralInfo"
 
-                    }, 
+                    },
                     {
                         "type": "postback",
                         "title": "Check Our Hagat",
                         "payload": "getHagat"
                     },
-                   
+
                     {
                         "type": "postback",
                         "title": "Contact Us",
@@ -149,7 +149,7 @@ app.post('/webhook/', function (req, res) {
 
             fetch('http://54.187.92.64:3000/business/b/BreakOut')
 			.then(res => res.json())
-			.then(json => 
+			.then(json =>
 				{
 					// console.log("AHLAAAANNN");
 					// console.log(json);
@@ -163,7 +163,7 @@ app.post('/webhook/', function (req, res) {
             else if(text.substring(0,200)== '{"payload":"getHagat"}'){
 
             	sendHagatMessage(sender)
-            	continue	
+            	continue
             }
              else if(text.substring(0,200)== '{"payload":"getEvents"}'){
 
@@ -177,8 +177,8 @@ app.post('/webhook/', function (req, res) {
             			getOnceEvents(sender, json.events);
             		}
             	});
-               
-            	continue	
+
+            	continue
             }
 
              else if(text.substring(0,200)== '{"payload":"getFacilities"}'){
@@ -193,12 +193,12 @@ app.post('/webhook/', function (req, res) {
             		} else {
             			getFacilities(sender, json.facilities);
             		}
-            	});   
-            	continue	
+            	});
+            	continue
             }
 
              else if(text.substring(0,200)== '{"payload":"getOffers"}'){
-            
+
 				fetch('http://54.187.92.64:3000/offers/viewOffersByName/BreakOut')
             	.then(res => res.json())
             	.then(json => {
@@ -209,28 +209,28 @@ app.post('/webhook/', function (req, res) {
             		} else {
             			getOffers(sender, json.offers);
             		}
-            	}); 
-			
+            	});
+
             continue
             }
 
             else if(text.substring(0,200)== '{"payload":"getContacts"}'){
             	fetch('http://54.187.92.64:3000/business/b/BreakOut')
 				.then(res => res.json())
-				.then(json => 
+				.then(json =>
 				{
 					// console.log("Contactsss");
 					// console.log(json);
 					getPhones(sender,json.result.phones,json.result.email);
 				});
             continue
-            } 
+            }
             else if(text.substring(0,19) == '{"payload":"Event: ') {
         		eventId = text.substring(19, text.length - 2);
 
         		fetch('http://54.187.92.64:3000/event/getOnceEventDetails/' + eventId)
 				.then(res => res.json()) //don't forget to handle errors(d.error))
-				.then(json => 
+				.then(json =>
 				{ //({business: event.business_id, event:event, eventocc:eventocc});
 					// console.log("getonceeventdetaiillsssss");
 					// console.log(json);
@@ -238,20 +238,20 @@ app.post('/webhook/', function (req, res) {
 					var date = new Date(json.eventocc.day);
 					var day = date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
 					sendTextMessage(sender,"Name: " + json.event.name + "\nDescription: " + json.event.description +
-					 "\nDay: "+ day + "\nTiming: " + json.eventocc.time + "\nPrice: " + json.event.price + 
+					 "\nDay: "+ day + "\nTiming: " + json.eventocc.time + "\nPrice: " + json.event.price +
 					 "\nCapacity: " + json.event.capacity + "\nAvailable: "+json.eventocc.available, token);
 				});
         		// console.log(id);
         		// sendTextMessage(sender, "EVENTID " + eventId,token);
 
-            } 
+            }
              else if(text.substring(0,19) == '{"payload":"Offer: ') {
         		offerId = text.substring(19, text.length - 2);
 
-        		fetch('http://54.187.92.64:3000/offers/offerDetails/:id' + offerId)
+        		fetch('http://54.187.92.64:3000/offers/offerDetails/' + offerId)
 				.then(res => res.json()) //don't forget to handle errors(d.error))
-				.then(json => 
-				{ 
+				.then(json =>
+				{
 					console.log("offer!!!" + json.offer);
 					sendTextMessage(sender,"Name: " + json.offer.name + "\ntype: " + json.offer.type +
 					 "\nValue: "+json.offer.value , token);
@@ -262,7 +262,7 @@ app.post('/webhook/', function (req, res) {
             	facilityId = text.substring(22, text.length - 2);
             	fetch('http://54.187.92.64:3000/event/getEvents/' + facilityId)
             	.then(res => res.json())
-            	.then(json => 
+            	.then(json =>
             	{//res.status(200).json({events:events, eventocc:eventocc,name:facility.name});
             		getDailyEvents(sender, json.events, json.eventocc, json.name);
             	});
@@ -328,7 +328,7 @@ function getFacilities(sender, facilities) {
 			"title":facility1.name,
 			payload: "Facility: "+ facility1._id
 		})
-		if(facilities[i+1]){ 
+		if(facilities[i+1]){
 			var facility2 = facilities[i+1];
 			buttons.push({
 				"type":"postback",
@@ -343,7 +343,7 @@ function getFacilities(sender, facilities) {
 				"title":facility3.name,
 				payload: "Facility: "+ facility3._id
 			})
-		} 
+		}
 
 		console.log("BUTTONS", buttons);
 
@@ -397,7 +397,7 @@ function getOnceEvents(sender, events) {
 			"title":event1.name,
 			payload: "Event: "+ event1._id
 		})
-		if(events[i+1]){ 
+		if(events[i+1]){
 			var event2 = events[i+1];
 			buttons.push({
 				"type":"postback",
@@ -412,7 +412,7 @@ function getOnceEvents(sender, events) {
 				"title":event3.name,
 				payload: "Event: "+ event3._id
 			})
-		} 
+		}
 
 		console.log("BUTTONS", buttons);
 
@@ -583,7 +583,7 @@ function getOffers(sender, offers) {
 			payload: "Offer: "+ offer1._id
 
 		})
-		if(offers[i+1]){ 
+		if(offers[i+1]){
 			var offer2 = offers[i+1];
 			buttons.push({
 				"type":"postback",
@@ -598,7 +598,7 @@ function getOffers(sender, offers) {
 				"title":offer3.name,
 				payload: "Offer: "+ offer3.name + "Type: "+offer3.type+"Value: "+offer3.value
 			})
-		} 
+		}
 
 		console.log("BUTTONS", buttons);
 
@@ -636,4 +636,3 @@ function getOffers(sender, offers) {
         }
     })
 }
-
