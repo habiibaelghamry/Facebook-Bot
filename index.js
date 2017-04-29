@@ -135,6 +135,7 @@ app.post('/webhook/', function (req, res) {
 
             text = event.message.text
             if (text === 'Hi') {
+            	console.log("Ana fl Hiiiii");
                 sendGenericMessage(sender)
                 continue
             }
