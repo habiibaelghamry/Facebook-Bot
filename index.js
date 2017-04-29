@@ -252,6 +252,7 @@ app.post('/webhook/', function (req, res) {
 				.then(res => res.json()) //don't forget to handle errors(d.error))
 				.then(json => 
 				{ 
+					console.log("offer!!!" + json.offer);
 					sendTextMessage(sender,"Name: " + json.offer.name + "\ntype: " + json.offer.type +
 					 "\nValue: "+json.offer.value , token);
 				});
