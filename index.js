@@ -204,9 +204,9 @@ app.post('/webhook/', function (req, res) {
             }
 
             else if(text.substring(0,200)== '{"payload":"getContacts"}'){
-            	 fetch('http://54.187.92.64:3000/business/b/BreakOut')
-			.then(res => res.json())
-			.then(json => 
+            	fetch('http://54.187.92.64:3000/business/b/BreakOut')
+				.then(res => res.json())
+				.then(json => 
 				{
 					console.log("Contactsss");
 					console.log(json);
@@ -216,9 +216,18 @@ app.post('/webhook/', function (req, res) {
             } else {
             	console.log(text.substring(0,19));
             	if(text.substring(0,19) == '{"payload":"Event: ') {
-            		id = text.substring(19, text.length - 2);
-            		console.log(id);
-            		sendTextMessage(sender, "EVENTID " + id,token);
+            		eventId = text.substring(19, text.length - 2);
+
+            		fetch('http://54.187.92.64:3000/event/getOnceEventDetails/' + eventId)
+					.then(res => res.json()) //don't forget to handle errors(d.error))
+					.then(json => 
+					{ //({business: event.business_id, event:event, eventocc:eventocc});
+						console.log("getonceeventdetaiillsssss");
+						console.log(json);
+						sendTextMessage(sender,"Event: " + JSON.stringify(json.event) + "\n EventOcc: " + JSON.stringify(json.eventocc));
+					});
+            		// console.log(id);
+            		// sendTextMessage(sender, "EVENTID " + eventId,token);
 
             	}
             }
