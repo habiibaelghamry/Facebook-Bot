@@ -247,7 +247,7 @@ app.post('/webhook/', function (req, res) {
             }
              else if(text.substring(0,19) == '{"payload":"Offer: ') {
         		offerId = text.substring(19, text.length - 2);
-                console.log("ID"+offerId);
+
         		fetch('http://54.187.92.64:3000/offers/offerDetails/' + offerId)
 				.then(res => res.json()) //don't forget to handle errors(d.error))
 				.then(json =>
@@ -588,7 +588,7 @@ function getOffers(sender, offers) {
 			buttons.push({
 				"type":"postback",
 				"title":offer2.name,
-				payload: "Offer: "+ offer2.name + "Type: "+offer2.type +"Value: "+offer2.value
+				payload: "Offer: "+ offer2._id
 			})
 		}
 		if(offers[i+2]){
@@ -596,7 +596,7 @@ function getOffers(sender, offers) {
 			buttons.push({
 				"type":"postback",
 				"title":offer3.name,
-				payload: "Offer: "+ offer3.name + "Type: "+offer3.type+"Value: "+offer3.value
+				payload: "Offer: "+ offer3._id
 			})
 		}
 
