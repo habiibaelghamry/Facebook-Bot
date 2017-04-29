@@ -466,10 +466,10 @@ function getDailyEvents(sender, events, eventoccs, name) {
 			"subtitle": "Price: " + events[l].price + "\n DaysOff: " + events[l].days,
 			"image_url": "https://media-cdn.tripadvisor.com/media/photo-s/07/3f/a2/83/icon.jpg",
 			"buttons" : [{
-				"type":"postback",
-				"title":"View Occurrences",
-				payload: "occ: "+ events[l]._id
-			}]
+                        "type": "web_url",
+                        "url": "http://54.187.92.64:8000/#!/viewOccurences/"+event[l]._id,
+                        "title": "View Occurrences"
+                    }]
 		})
     }
     messageData = {
