@@ -241,6 +241,22 @@ app.post('/webhook/', function (req, res) {
             	{//res.status(200).json({events:events, eventocc:eventocc,name:facility.name});
             		getDailyEvents(sender, json.events, json.eventocc, json.name);
             	});
+            } else if(text.substring(0,17) == '{"payload":"occ: ') {
+            	eventId = text.substring(17,text.length - 2);
+            	fetch('http://54.187.92.64:3000/event/viewO/' + eventId) //{eventocc:events}
+            	.then(res => res.json())
+            	.then(json => {
+            		var s = "";
+            		for(var i = 0; i < json.eventocc.length; i++) {
+            			var date = new Date(json.eventocc[i].day);
+            			var day = date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
+
+            			var tmp = day + "\n Available Places: " + json.eventocc[i].available + "\n\n";
+            			s = s + tmp;
+            		}
+
+            		sendTextMessage(sender, s, token);
+            	})
             }
         }
     }
@@ -455,7 +471,6 @@ function getDailyEvents(sender, events, eventoccs, name) {
 			}]
 		})
     }
-    console.log("YASMINEEE");
     messageData = {
         "attachment": {
         	"type": "template",
@@ -480,9 +495,6 @@ function getDailyEvents(sender, events, eventoccs, name) {
             console.log('Error: ', response.body.error)
         }
     })
-
-    // console.log("e");
-
 }
 
 
