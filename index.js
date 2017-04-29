@@ -241,7 +241,7 @@ app.post('/webhook/', function (req, res) {
             	{//res.status(200).json({events:events, eventocc:eventocc,name:facility.name});
             		getDailyEvents(sender, json.events, json.eventocc, json.name);
             	});
-            } else if(text.substring(0,17) == '{"payload":"occ: ') {
+            } else{ console.log(text.substring(0,17)) ;if(text.substring(0,17) == '{"payload":"occ: ') {
             	eventId = text.substring(17,text.length - 2);
             	fetch('http://54.187.92.64:3000/event/viewO/' + eventId) //{eventocc:events}
             	.then(res => res.json())
@@ -258,6 +258,7 @@ app.post('/webhook/', function (req, res) {
             		sendTextMessage(sender, s, token);
             	})
             }
+        }
         }
     }
     res.sendStatus(200)
