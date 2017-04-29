@@ -264,9 +264,12 @@ app.post('/webhook/', function (req, res) {
             	.then(res => res.json())
             	.then(json =>
             	{  
-                    if(json.events)
+                    if(json.events && json.events.length > 0)
             		getDailyEvents(sender, json.events, json.eventocc, json.name);
-                    else sendTextMessage(sender,"No Events",token);
+                    else {
+                        console.log("else");
+                        sendTextMessage(sender,"No Events",token);
+                    }
             	});
             } else if(text.substring(0,17) == '{"payload":"occ: ') {
             	eventId = text.substring(17,text.length - 2);
