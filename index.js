@@ -150,8 +150,8 @@ app.post('/webhook/', function (req, res) {
 			.then(res => res.json())
 			.then(json => 
 				{
-					console.log("AHLAAAANNN");
-					console.log(json);
+					// console.log("AHLAAAANNN");
+					// console.log(json);
 
 					sendTextMessage(sender,"Description: " + json.result.description + "\n Address: " + json.result.address +
 						"\n Area: " + json.result.area + "\n Fasa7ny Average Rating: " + json.result.average_rating
@@ -169,7 +169,7 @@ app.post('/webhook/', function (req, res) {
             	fetch('http://54.187.92.64:3000/business/b/BreakOut')
             	.then(res => res.json())
             	.then(json => {
-            		console.log("Events")
+            		// console.log("Events")
             		if((json.events && json.events.length == 0) || (!json.events)) {
             			sendTextMessage(sender, "No Events",token);
             		} else {
@@ -185,8 +185,8 @@ app.post('/webhook/', function (req, res) {
             	fetch('http://54.187.92.64:3000/business/b/BreakOut')
             	.then(res => res.json())
             	.then(json => {
-            		console.log("Facilities");
-            		console.log(json.facilities);
+            		// console.log("Facilities");
+            		// console.log(json.facilities);
             		if((json.facilities && json.facilities.length == 0) || (!json.facilities)) {
             			sendTextMessage(sender, "No Facilities",token);
             		} else {
@@ -208,8 +208,8 @@ app.post('/webhook/', function (req, res) {
 				.then(res => res.json())
 				.then(json => 
 				{
-					console.log("Contactsss");
-					console.log(json);
+					// console.log("Contactsss");
+					// console.log(json);
 					sendTextMessage(sender,"Email: " + json.result.email + "\n Phone numbers: " + json.result.phones,token);
 				});
             continue
@@ -221,8 +221,8 @@ app.post('/webhook/', function (req, res) {
 				.then(res => res.json()) //don't forget to handle errors(d.error))
 				.then(json => 
 				{ //({business: event.business_id, event:event, eventocc:eventocc});
-					console.log("getonceeventdetaiillsssss");
-					console.log(json);
+					// console.log("getonceeventdetaiillsssss");
+					// console.log(json);
 					// 2017-04-30T22:00:00.000Z
 					var date = new Date(json.eventocc.day);
 					var day = date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
@@ -456,7 +456,7 @@ function getDailyEvents(sender, events, eventoccs, name) {
 			}]
 		})
     }
-
+    console.log("YASMINEEE");
     messageData = {
         "attachment": {
         	"type": "template",
@@ -482,7 +482,7 @@ function getDailyEvents(sender, events, eventoccs, name) {
         }
     })
 
-    console.log("e");
+    // console.log("e");
 
 }
 
