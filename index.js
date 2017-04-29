@@ -213,30 +213,35 @@ app.post('/webhook/', function (req, res) {
 					sendTextMessage(sender,"Email: " + json.result.email + "\n Phone numbers: " + json.result.phones,token);
 				});
             continue
-            } else {
-            	console.log(text.substring(0,19));
-            	if(text.substring(0,19) == '{"payload":"Event: ') {
-            		eventId = text.substring(19, text.length - 2);
+            } 
+            else if(text.substring(0,19) == '{"payload":"Event: ') {
+        		eventId = text.substring(19, text.length - 2);
 
-            		fetch('http://54.187.92.64:3000/event/getOnceEventDetails/' + eventId)
-					.then(res => res.json()) //don't forget to handle errors(d.error))
-					.then(json => 
-					{ //({business: event.business_id, event:event, eventocc:eventocc});
-						console.log("getonceeventdetaiillsssss");
-						console.log(json);
-						// 2017-04-30T22:00:00.000Z
-						var date = new Date(json.eventocc.day);
-						var day = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
-						sendTextMessage(sender,"Name: " + json.event.name + "\nDescription: " + json.event.description +
-						 "\nDay: "+ day + "\nTiming: " + json.eventocc.time + "\nPrice: " + json.event.price + 
-						 "\nCapacity: " + json.event.capacity + "\nAvailable: "+json.eventocc.available, token);
-					});
-            		// console.log(id);
-            		// sendTextMessage(sender, "EVENTID " + eventId,token);
+        		fetch('http://54.187.92.64:3000/event/getOnceEventDetails/' + eventId)
+				.then(res => res.json()) //don't forget to handle errors(d.error))
+				.then(json => 
+				{ //({business: event.business_id, event:event, eventocc:eventocc});
+					console.log("getonceeventdetaiillsssss");
+					console.log(json);
+					// 2017-04-30T22:00:00.000Z
+					var date = new Date(json.eventocc.day);
+					var day = date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
+					sendTextMessage(sender,"Name: " + json.event.name + "\nDescription: " + json.event.description +
+					 "\nDay: "+ day + "\nTiming: " + json.eventocc.time + "\nPrice: " + json.event.price + 
+					 "\nCapacity: " + json.event.capacity + "\nAvailable: "+json.eventocc.available, token);
+				});
+        		// console.log(id);
+        		// sendTextMessage(sender, "EVENTID " + eventId,token);
 
-            	}
+            } else if(text.substring(0,22) == '{"payload":"Facility: ') {
+            	facilityId = text.substring(22, text.length - 2);
+            	fetch('http://54.187.92.64:3000/event/getEvents/' + facilityId)
+            	.then(res => res.json())
+            	.then(json => 
+            	{//res.status(200).json({events:events, eventocc:eventocc,name:facility.name});
+            		getDailyEvents(sender, json.events, json.eventocc, json.name);
+            	});
             }
-           
         }
     }
     res.sendStatus(200)
@@ -404,6 +409,81 @@ function getOnceEvents(sender, events) {
     })
 }
 
+//getDailyEvents(sender, json.events, json.eventocc, json.name);
+
+function getDailyEvents(sender, events, eventoccs, name) {
+	console.log("GET DAILY EVENTS");
+	for(int i = 0; i < events.length; i++)
+		for(int j = 0; j < eventoccs.length; j++)
+			if(events[i]._id == eventocc[j].event) {
+				events[i].time = eventocc[j].time;
+				break;
+			}
+
+	for(var x = 0; x < events.length; x++) {
+      	var days = "";
+      	// console.log("daysoff: " + events[x]);
+      	for(var y = 0; events[x].daysOff && y < events[x].daysOff.length ; y++){
+        	if(events[x].daysOff[y]==0){ days = days + "Sunday, ";}
+        	else if(events[x].daysOff[y]==1){ days = days + "Monday, ";}
+        	else if(events[x].daysOff[y]==2){ days = days + "Tuesday, ";}
+        	else if(events[x].daysOff[y]==3){ days = days + "Wednesday, ";}
+        	else if(events[x].daysOff[y]==4){ days = days + "Thursday, ";}
+        	else if(events[x].daysOff[y]==5){ days = days + "Friday, ";}
+        	else if(events[x].daysOff[y]==6){ days = days + "Saturday, ";}
+      	}
+		if(events[x].daysOff.length == 0){
+			days = "No days off";
+			events[x].days = days
+		}
+		else{
+    		events[x].days = days.substring(0, days.length-2);
+		}
+    }
+    console.log(JSON.stringify(events));
+    var cards = events.length;
+
+    var elem = [];
+    for(var l = 0; l < events.length; i++) {
+    	elem.push({
+			"title": events[l].time,
+			"subtitle": "Price: " + events[l].price + "\n DaysOff: " + events[l].days,
+			"image_url": "https://media-cdn.tripadvisor.com/media/photo-s/07/3f/a2/83/icon.jpg",
+			"buttons" : [{
+				"type":"postback",
+				"title":"View Occurrences",
+				payload: "occ: "+ events[l]._id
+			}]
+		})
+    }
+
+    messageData = {
+        "attachment": {
+        	"type": "template",
+        	"payload": {
+       	    	"template_type": "generic",
+            	"elements": elem
+            }
+        }
+    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+
+
+}
 
 
 
