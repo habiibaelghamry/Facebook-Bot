@@ -249,8 +249,8 @@ app.post('/webhook/', function (req, res) {
         		offer = text.substring(19, text.length - 2);
 
         		
-        		console.log(JSON.stringify(offer));
-        		sendTextMessage(sender, JSON.stringify(offer),token);
+        		console.log(offer);
+        		sendTextMessage(sender, offer,token);
 
             }
             else if(text.substring(0,22) == '{"payload":"Facility: ') {
@@ -575,7 +575,8 @@ function getOffers(sender, offers) {
 		buttons.push({
 			"type":"postback",
 			"title":offer1.name,
-			payload: "Offer: "+ offer1
+			payload: "Offer: "+ offer1.name +"\n Type:"+ offer1.type +"\n Value:"+offer1.value
+
 		})
 		if(offers[i+1]){ 
 			var offer2 = offers[i+1];
