@@ -263,26 +263,14 @@ app.post('/webhook/', function (req, res) {
             	fetch('http://54.187.92.64:3000/event/getEvents/' + facilityId)
             	.then(res => res.json())
             	.then(json =>
-            	{//res.status(200).json({events:events, eventocc:eventocc,name:facility.name});
+            	{  
+                    if(json.events)
             		getDailyEvents(sender, json.events, json.eventocc, json.name);
+                    else sendTextMessage(sender,"No Events",token);
             	});
             } else if(text.substring(0,17) == '{"payload":"occ: ') {
             	eventId = text.substring(17,text.length - 2);
-            	// fetch('http://54.187.92.64:3000/event/viewO/' + eventId) //{eventocc:events}
-            	// .then(res => res.json())
-            	// .then(json => {
-            	// 	var s = "";
-            	// 	for(var i = 0; i < json.eventocc.length; i++) {
-            	// 		var date = new Date(json.eventocc[i].day);
-            	// 		var day = date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
-            	// 		sendTextMessage(sender, s, token);
-            	// 		var tmp = day + "\nAvailable Places: " + json.eventocc[i].available + "\n\n";
-            	// 		// console.log(tmp)
-            	// 		s = s + tmp;
-            	// 	}
-            	// 	console.log("SS",s);
-            		// sendTextMessage(sender, s, token);
-            	// })
+            	
                 console.log("ana fl occ");
                 sendTextMessage(sender,'http://54.187.92.64:8000/#!/viewOccurences/' + eventId,token)
             }
