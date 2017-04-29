@@ -442,7 +442,7 @@ function getDailyEvents(sender, events, eventoccs, name) {
     }
     // console.log(JSON.stringify(events));
     var cards = events.length;
-
+    console.log("CARDSS",cards);
     var elem = [];
     for(var l = 0; l < events.length; i++) {
     	elem.push({
