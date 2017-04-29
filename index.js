@@ -215,7 +215,7 @@ app.post('/webhook/', function (req, res) {
             continue
             } else {
             	console.log(text.substring(0,19));
-            	if(text.substring(0,19) == '{"payload":"Events: ') {
+            	if(text.substring(0,19) == '{"payload":"Event: ') {
             		id = text.substring(20, text.length - 2);
             		console.log(id);
             		sendTextMessage(sender, "EVENTID " + id,token);
