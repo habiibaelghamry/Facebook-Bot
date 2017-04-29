@@ -183,7 +183,7 @@ app.post('/webhook/', function (req, res) {
             	.then(json => {
             		console.log("Facilities");
             		console.log(json.facilities);
-            		if(facilities.length == 0) {
+            		if(json.facilities.length == 0) {
             			sendTextMessage(sender, "No Facilities",token);
             		} else {
             			getFacilities(sender, json.facilities);
