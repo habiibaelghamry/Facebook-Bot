@@ -250,13 +250,13 @@ app.post('/webhook/', function (req, res) {
             		for(var i = 0; i < json.eventocc.length; i++) {
             			var date = new Date(json.eventocc[i].day);
             			var day = date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
-
-            			var tmp = day + "\n Available Places: " + json.eventocc[i].available + "\n\n";
-            			console.log(tmp)
+            			sendTextMessage(sender, s, token);
+            			var tmp = day + "\nAvailable Places: " + json.eventocc[i].available + "\n\n";
+            			// console.log(tmp)
             			s = s + tmp;
             		}
             		console.log("SS",s);
-            		sendTextMessage(sender, s, token);
+            		// sendTextMessage(sender, s, token);
             	})
             }
         }
