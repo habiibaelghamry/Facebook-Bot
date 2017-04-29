@@ -170,7 +170,11 @@ app.post('/webhook/', function (req, res) {
             	.then(res => res.json())
             	.then(json => {
             		console.log("Events")
-            		sendTextMessage(sender, json.events,token);
+            		if((json.events && json.events.length == 0) || (!json.events)) {
+            			sendTextMessage(sender, "No Events",token);
+            		} else {
+            			getEvents(sender, json.events);
+            		}
             	});
                
             	continue	
@@ -183,7 +187,7 @@ app.post('/webhook/', function (req, res) {
             	.then(json => {
             		console.log("Facilities");
             		console.log(json.facilities);
-            		if(json.facilities.length == 0) {
+            		if((json.facilities && json.facilities.length == 0) || (!json.facilities)) {
             			sendTextMessage(sender, "No Facilities",token);
             		} else {
             			getFacilities(sender, json.facilities);
@@ -276,6 +280,75 @@ function getFacilities(sender, facilities) {
 
 		elem.push({
 			"title": "Facilities",
+			"image_url": "https://media-cdn.tripadvisor.com/media/photo-s/07/3f/a2/83/icon.jpg",
+			"buttons" : buttons
+		})
+
+		console.log("ELEMS", elem);
+	}
+
+	messageData = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": elem
+            }
+        }
+    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
+
+
+function getOnceEvents(sender, events) {
+	console.log("ANA FL FACILITY");
+	var cards = Math.ceil(events.length / 3);
+	console.log(cards);
+	var elem = [];
+	for(var i = 0; i < events.length; i+=3) {
+		var buttons = [];
+
+		var event1 = events[i];
+		buttons.push({
+			"type":"postback",
+			"title":event1.name,
+			payload: "Event: "+ event1._id
+		})
+		if(events[i+1]){ 
+			var event2 = events[i+1];
+			buttons.push({
+				"type":"postback",
+				"title":event2.name,
+				payload: "Event: "+ event2._id
+			})
+		}
+		if(events[i+2]){
+			var event3 = events[i+2];
+			buttons.push({
+				"type":"postback",
+				"title":event3.name,
+				payload: "Event: "+ event3._id
+			})
+		} 
+
+		console.log("BUTTONS", buttons);
+
+		elem.push({
+			"title": "Events",
 			"image_url": "https://media-cdn.tripadvisor.com/media/photo-s/07/3f/a2/83/icon.jpg",
 			"buttons" : buttons
 		})
