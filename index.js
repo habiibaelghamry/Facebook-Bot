@@ -6,18 +6,18 @@ var app = express()
 
 app.set('port', (process.env.PORT || 5000))
 
-// Process application/x-www-form-urlencoded
+
 app.use(bodyParser.urlencoded({extended: false}))
 
-// Process application/json
+
 app.use(bodyParser.json())
 
-// Index route
+
 app.get('/', function (req, res) {
     res.send('Hello world, I am a chat bot')
 })
 
-// for Facebook verification
+
 app.get('/webhook/', function (req, res) {
     if (req.query['hub.verify_token'] === 'franshly') {
         res.send(req.query['hub.challenge'])
@@ -25,7 +25,7 @@ app.get('/webhook/', function (req, res) {
     res.send('Error, wrong token')
 })
 
-// Spin up the server
+
 app.listen(app.get('port'), function() {
     console.log('running on port', app.get('port'))
 })
@@ -135,25 +135,23 @@ app.post('/webhook/', function (req, res) {
 
             text = event.message.text
             if (text === 'Hi') {
-            	console.log("Ana fl Hiiiii");
+            	
                 sendGenericMessage(sender)
                 continue
             }
-            sendTextMessage(sender, "Ya Basha ana Bot, doos 3al buttons aw ektb Hi! ")
+            sendTextMessage(sender, "Ektb Hi aw doos 3al buttons")
         }
         if (event.postback) {
-        	// '{"payload":"getGeneralInfo"}'
+        	
             text = JSON.stringify(event.postback)
-            // sendTextMessage(sender, "Postback received: "+text.substring(0, 200).payload, token)
+            
             if(text.substring(0,200)== '{"payload":"getGeneralInfo"}'){
 
             fetch('http://54.187.92.64:3000/business/b/BreakOut')
 			.then(res => res.json())
 			.then(json =>
 				{
-					// console.log("AHLAAAANNN");
-					// console.log(json);
-
+			
 					sendTextMessage(sender,"Description: " + json.result.description + "\n Address: " + json.result.address +
 						"\n Area: " + json.result.area + "\n Fasa7ny Average Rating: " + json.result.average_rating
 						,token);
@@ -170,7 +168,7 @@ app.post('/webhook/', function (req, res) {
             	fetch('http://54.187.92.64:3000/business/b/BreakOut')
             	.then(res => res.json())
             	.then(json => {
-            		// console.log("Events")
+            		
             		if((json.events && json.events.length == 0) || (!json.events)) {
             			sendTextMessage(sender, "No Events",token);
             		} else {
@@ -186,8 +184,7 @@ app.post('/webhook/', function (req, res) {
             	fetch('http://54.187.92.64:3000/business/b/BreakOut')
             	.then(res => res.json())
             	.then(json => {
-            		// console.log("Facilities");
-            		// console.log(json.facilities);
+            		
             		if((json.facilities && json.facilities.length == 0) || (!json.facilities)) {
             			sendTextMessage(sender, "No Facilities",token);
             		} else {
@@ -202,8 +199,8 @@ app.post('/webhook/', function (req, res) {
 				fetch('http://54.187.92.64:3000/offers/viewOffersByName/BreakOut')
             	.then(res => res.json())
             	.then(json => {
-            		// console.log("Facilities");
-            		console.log(json.offers);
+            		
+            		
             		if((json.offers && json.offers.length == 0) || (!json.offers)) {
             			sendTextMessage(sender, "No Offers",token);
             		} else {
@@ -219,8 +216,7 @@ app.post('/webhook/', function (req, res) {
 				.then(res => res.json())
 				.then(json =>
 				{
-					// console.log("Contactsss");
-					// console.log(json);
+					
 					getPhones(sender,json.result.phones,json.result.email);
 				});
             continue
@@ -229,30 +225,26 @@ app.post('/webhook/', function (req, res) {
         		eventId = text.substring(19, text.length - 2);
 
         		fetch('http://54.187.92.64:3000/event/getOnceEventDetails/' + eventId)
-				.then(res => res.json()) //don't forget to handle errors(d.error))
+				.then(res => res.json()) 
 				.then(json =>
-				{ //({business: event.business_id, event:event, eventocc:eventocc});
-					// console.log("getonceeventdetaiillsssss");
-					// console.log(json);
-					// 2017-04-30T22:00:00.000Z
+				{ 
 					var date = new Date(json.eventocc.day);
 					var day = date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
 					sendTextMessage(sender,"Name: " + json.event.name + "\nDescription: " + json.event.description +
 					 "\nDay: "+ day + "\nTiming: " + json.eventocc.time + "\nPrice: " + json.event.price +
 					 "\nCapacity: " + json.event.capacity + "\nAvailable: "+json.eventocc.available, token);
 				});
-        		// console.log(id);
-        		// sendTextMessage(sender, "EVENTID " + eventId,token);
+        		
 
             }
              else if(text.substring(0,19) == '{"payload":"Offer: ') {
         		offerId = text.substring(19, text.length - 2);
 
         		fetch('http://54.187.92.64:3000/offers/offerDetails/' + offerId)
-				.then(res => res.json()) //don't forget to handle errors(d.error))
+				.then(res => res.json()) 
 				.then(json =>
 				{
-					console.log("offer!!!" + json.offer);
+					
 					sendTextMessage(sender,"Name: " + json.offer.name + "\ntype: " + json.offer.type +
 					 "\nValue: "+json.offer.value , token);
 				});
@@ -267,14 +259,14 @@ app.post('/webhook/', function (req, res) {
                     if(json.events && json.events.length > 0)
             		getDailyEvents(sender, json.events, json.eventocc, json.name);
                     else {
-                        console.log("else");
+                       
                         sendTextMessage(sender,"No Events",token);
                     }
             	});
             } else if(text.substring(0,17) == '{"payload":"occ: ') {
             	eventId = text.substring(17,text.length - 2);
             	
-                console.log("ana fl occ");
+                
                 sendTextMessage(sender,'http://54.187.92.64:8000/#!/viewOccurences/' + eventId,token)
             }
         }
@@ -308,9 +300,9 @@ function sendTextMessage(sender, text) {
 
 
 function getFacilities(sender, facilities) {
-	console.log("ANA FL FACILITY");
+	
 	var cards = Math.ceil(facilities.length / 3);
-	console.log(cards);
+	
 	var elem = [];
 	for(var i = 0; i < facilities.length; i+=3) {
 		var buttons = [];
@@ -338,7 +330,7 @@ function getFacilities(sender, facilities) {
 			})
 		}
 
-		console.log("BUTTONS", buttons);
+		
 
 		elem.push({
 			"title": "Facilities",
@@ -346,7 +338,7 @@ function getFacilities(sender, facilities) {
 			"buttons" : buttons
 		})
 
-		console.log("ELEMS", elem);
+		
 	}
 
 	messageData = {
@@ -377,9 +369,9 @@ function getFacilities(sender, facilities) {
 
 
 function getOnceEvents(sender, events) {
-	console.log("ANA FL FACILITY");
+	
 	var cards = Math.ceil(events.length / 3);
-	console.log(cards);
+	
 	var elem = [];
 	for(var i = 0; i < events.length; i+=3) {
 		var buttons = [];
@@ -407,7 +399,7 @@ function getOnceEvents(sender, events) {
 			})
 		}
 
-		console.log("BUTTONS", buttons);
+		
 
 		elem.push({
 			"title": "Events",
@@ -415,7 +407,7 @@ function getOnceEvents(sender, events) {
 			"buttons" : buttons
 		})
 
-		console.log("ELEMS", elem);
+		
 	}
 
 	messageData = {
@@ -444,10 +436,10 @@ function getOnceEvents(sender, events) {
     })
 }
 
-//getDailyEvents(sender, json.events, json.eventocc, json.name);
+
 
 function getDailyEvents(sender, events, eventoccs, name) {
-	// console.log("GET DAILY EVENTS");
+	
 	for(var i = 0; i < events.length; i++)
 		for(var j = 0; j < eventoccs.length; j++)
 			if(events[i]._id == eventoccs[j].event) {
@@ -457,7 +449,7 @@ function getDailyEvents(sender, events, eventoccs, name) {
 
 	for(var x = 0; x < events.length; x++) {
       	var days = "";
-      	// console.log("daysoff: " + events[x]);
+      	
       	for(var y = 0; events[x].daysOff && y < events[x].daysOff.length ; y++){
         	if(events[x].daysOff[y]==0){ days = days + "Sunday, ";}
         	else if(events[x].daysOff[y]==1){ days = days + "Monday, ";}
@@ -475,7 +467,7 @@ function getDailyEvents(sender, events, eventoccs, name) {
     		events[x].days = days.substring(0, days.length-2);
 		}
     }
-    // console.log(JSON.stringify(events));
+    
     var cards = events.length;
     var elem = [];
     for(var l = 0; l < events.length; l++) {
@@ -562,9 +554,9 @@ function getPhones(sender, phones,email) {
 }
 
 function getOffers(sender, offers) {
-	console.log("ANA FL Offers");
+	
 	var cards = Math.ceil(offers.length / 3);
-	console.log(cards);
+	
 	var elem = [];
 	for(var i = 0; i < offers.length; i+=3) {
 		var buttons = [];
@@ -593,7 +585,7 @@ function getOffers(sender, offers) {
 			})
 		}
 
-		console.log("BUTTONS", buttons);
+		
 
 		elem.push({
 			"title": "Offers",
@@ -601,7 +593,7 @@ function getOffers(sender, offers) {
 			"buttons" : buttons
 		})
 
-		console.log("ELEMS", elem);
+		
 	}
 
 	messageData = {
