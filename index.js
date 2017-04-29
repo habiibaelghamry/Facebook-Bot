@@ -199,7 +199,17 @@ app.post('/webhook/', function (req, res) {
 
              else if(text.substring(0,200)== '{"payload":"getOffers"}'){
             
-				sendTextMessage(sender,"Offers",token);
+				fetch('http://54.187.92.64:3000/offers/viewOffersByName/BreakOut')
+            	.then(res => res.json())
+            	.then(json => {
+            		// console.log("Facilities");
+            		// console.log(json.facilities);
+            		if((json.offers && json.offers.length == 0) || (!json.offers)) {
+            			sendTextMessage(sender, "No Offers",token);
+            		} else {
+            			getOffers(sender, json.offers);
+            		}
+            	}); 
 			
             continue
             }
@@ -544,25 +554,71 @@ function getPhones(sender, phones,email) {
     })
 }
 
+function getOffers(sender, offers) {
+	console.log("ANA FL Offers");
+	var cards = Math.ceil(offers.length / 3);
+	console.log(cards);
+	var elem = [];
+	for(var i = 0; i < offers.length; i+=3) {
+		var buttons = [];
 
+		var offer1 = offers[i];
+		buttons.push({
+			"type":"postback",
+			"title":offer1.name,
+			payload: "Event: "+ offer1._id
+		})
+		if(offers[i+1]){ 
+			var offer2 = offers[i+1];
+			buttons.push({
+				"type":"postback",
+				"title":offer2.name,
+				payload: "Event: "+ offer2._id
+			})
+		}
+		if(offers[i+2]){
+			var offer3 = offers[i+2];
+			buttons.push({
+				"type":"postback",
+				"title":offer3.name,
+				payload: "Event: "+ offer3._id
+			})
+		} 
 
+		console.log("BUTTONS", buttons);
 
+		elem.push({
+			"title": "Offers",
+			"image_url": "https://media-cdn.tripadvisor.com/media/photo-s/07/3f/a2/83/icon.jpg",
+			"buttons" : buttons
+		})
 
+		console.log("ELEMS", elem);
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	messageData = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": elem
+            }
+        }
+    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
 
