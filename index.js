@@ -415,8 +415,8 @@ function getDailyEvents(sender, events, eventoccs, name) {
 	console.log("GET DAILY EVENTS");
 	for(var i = 0; i < events.length; i++)
 		for(var j = 0; j < eventoccs.length; j++)
-			if(events[i]._id == eventocc[j].event) {
-				events[i].time = eventocc[j].time;
+			if(events[i]._id == eventoccs[j].event) {
+				events[i].time = eventoccs[j].time;
 				break;
 			}
 
