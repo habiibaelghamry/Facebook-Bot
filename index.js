@@ -224,8 +224,11 @@ app.post('/webhook/', function (req, res) {
 					{ //({business: event.business_id, event:event, eventocc:eventocc});
 						console.log("getonceeventdetaiillsssss");
 						console.log(json);
+						// 2017-04-30T22:00:00.000Z
+						var date = new Date(json.eventocc.day);
+						var day = date.getDate() + "-" + (date.getMonth()+1) + "-" + date.getFullYear();
 						sendTextMessage(sender,"Name: " + json.event.name + "\nDescription: " + json.event.description +
-						 "\nDay: "+ json.eventocc.day + "\nTiming: " + json.eventocc.time + "\nPrice: " + json.event.price + 
+						 "\nDay: "+ day + "\nTiming: " + json.eventocc.time + "\nPrice: " + json.event.price + 
 						 "\nCapacity: " + json.event.capacity + "\nAvailable: "+json.eventocc.available, token);
 					});
             		// console.log(id);
