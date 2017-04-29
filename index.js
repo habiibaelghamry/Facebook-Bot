@@ -249,8 +249,8 @@ app.post('/webhook/', function (req, res) {
         		offer = text.substring(19, text.length - 2);
 
         		
-        		console.log(offer);
-        		sendTextMessage(sender, offer,token);
+        		console.log(JSON.stringify(offer);
+        		sendTextMessage(sender, JSON.stringify(offer),token);
 
             }
             else if(text.substring(0,22) == '{"payload":"Facility: ') {
