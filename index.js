@@ -246,11 +246,15 @@ app.post('/webhook/', function (req, res) {
 
             } 
              else if(text.substring(0,19) == '{"payload":"Offer: ') {
-        		offer = text.substring(19, text.length - 2);
+        		offerId = text.substring(19, text.length - 2);
 
-        		
-        		console.log(offer);
-        		sendTextMessage(sender, offer,token);
+        		fetch('http://54.187.92.64:3000/offers/offerDetails/:id' + offerId)
+				.then(res => res.json()) //don't forget to handle errors(d.error))
+				.then(json => 
+				{ 
+					sendTextMessage(sender,"Name: " + json.offer.name + "\ntype: " + json.offer.type +
+					 "\nValue: "+json.offer.value , token);
+				});
 
             }
             else if(text.substring(0,22) == '{"payload":"Facility: ') {
@@ -575,7 +579,7 @@ function getOffers(sender, offers) {
 		buttons.push({
 			"type":"postback",
 			"title":offer1.name,
-			payload: "Offer: "+ offer1.name +"\nType: "+ offer1.type +"\nValue: "+offer1.value
+			payload: "Offer: "+ offer1._id
 
 		})
 		if(offers[i+1]){ 
@@ -583,7 +587,7 @@ function getOffers(sender, offers) {
 			buttons.push({
 				"type":"postback",
 				"title":offer2.name,
-				payload: "Offer: "+ offer2.name + "\nType: "+offer2.type +"\nValue: "+offer2.value
+				payload: "Offer: "+ offer2.name + "Type: "+offer2.type +"Value: "+offer2.value
 			})
 		}
 		if(offers[i+2]){
@@ -591,7 +595,7 @@ function getOffers(sender, offers) {
 			buttons.push({
 				"type":"postback",
 				"title":offer3.name,
-				payload: "Offer: "+ offer3.name + "\nType: "+offer3.type+"\nValue: "+offer3.value
+				payload: "Offer: "+ offer3.name + "Type: "+offer3.type+"Value: "+offer3.value
 			})
 		} 
 
