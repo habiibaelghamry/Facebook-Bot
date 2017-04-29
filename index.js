@@ -173,7 +173,7 @@ app.post('/webhook/', function (req, res) {
             		if((json.events && json.events.length == 0) || (!json.events)) {
             			sendTextMessage(sender, "No Events",token);
             		} else {
-            			getEvents(sender, json.events);
+            			getOnceEvents(sender, json.events);
             		}
             	});
                
