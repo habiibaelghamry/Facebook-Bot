@@ -575,7 +575,7 @@ function getOffers(sender, offers) {
 		buttons.push({
 			"type":"postback",
 			"title":offer1.name,
-			payload: "Offer: "+ offer1.name +"\n Type:"+ offer1.type +"\n Value:"+offer1.value
+			payload: "Offer: "+ offer1.name +"\nType: "+ offer1.type +"\nValue: "+offer1.value
 
 		})
 		if(offers[i+1]){ 
@@ -583,7 +583,7 @@ function getOffers(sender, offers) {
 			buttons.push({
 				"type":"postback",
 				"title":offer2.name,
-				payload: "Offer: "+ offer2._id
+				payload: "Offer: "+ offer2.name + "\nType: "+offer2.type +"\nValue: "+offer2.value
 			})
 		}
 		if(offers[i+2]){
@@ -591,7 +591,7 @@ function getOffers(sender, offers) {
 			buttons.push({
 				"type":"postback",
 				"title":offer3.name,
-				payload: "Offer: "+ offer3._id
+				payload: "Offer: "+ offer3.name + "\nType: "+offer3.type+"\nValue: "+offer3.value
 			})
 		} 
 
