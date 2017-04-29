@@ -247,7 +247,7 @@ app.post('/webhook/', function (req, res) {
             }
              else if(text.substring(0,19) == '{"payload":"Offer: ') {
         		offerId = text.substring(19, text.length - 2);
-
+                console.log("ID"+offerId);
         		fetch('http://54.187.92.64:3000/offers/offerDetails/' + offerId)
 				.then(res => res.json()) //don't forget to handle errors(d.error))
 				.then(json =>
