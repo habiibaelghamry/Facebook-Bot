@@ -442,9 +442,8 @@ function getDailyEvents(sender, events, eventoccs, name) {
     }
     // console.log(JSON.stringify(events));
     var cards = events.length;
-    console.log("CARDSS",cards);
     var elem = [];
-    for(var l = 0; l < events.length; i++) {
+    for(var l = 0; l < events.length; l++) {
     	elem.push({
 			"title": events[l].time,
 			"subtitle": "Price: " + events[l].price + "\n DaysOff: " + events[l].days,
