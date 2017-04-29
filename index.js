@@ -249,7 +249,7 @@ app.post('/webhook/', function (req, res) {
         		offer = text.substring(19, text.length - 2);
 
         		
-        		console.log(JSON.stringify(offer);
+        		console.log(JSON.stringify(offer));
         		sendTextMessage(sender, JSON.stringify(offer),token);
 
             }
