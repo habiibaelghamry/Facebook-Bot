@@ -501,24 +501,31 @@ function getDailyEvents(sender, events, eventoccs, name) {
 
 
 function getPhones(sender, phones) {
+	var cards = phones.length;
+    var elem = [];
+    for(var l = 0; l < phones.length; l++) {
+    	elem.push({
+			"title": "Phone Numbers",
+			"image_url": "https://media-cdn.tripadvisor.com/media/photo-s/07/3f/a2/83/icon.jpg",
+			"buttons" : [
+					{
+          				"type":"phone_number",
+          				"title":"Call "+phones[l],
+          				"payload":phones[l]
+       				}
+				]
+		})
+    }
     messageData = {
         "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": [{
-                    "title": "Phone Numbers",
-                    "image_url": "https://media-cdn.tripadvisor.com/media/photo-s/07/3f/a2/83/icon.jpg",
-                    "buttons": [
-                    			{
-          						"type":"phone_number",
-          						"title":"Call "+phones[1],
-          						"payload":phones[1]
-       				}]
-            }]
+        	"type": "template",
+        	"payload": {
+       	    	"template_type": "generic",
+            	"elements": elem
+            }
         }
     }
-}
+
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: {access_token:token},
