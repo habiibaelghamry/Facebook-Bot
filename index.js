@@ -224,7 +224,9 @@ app.post('/webhook/', function (req, res) {
 					{ //({business: event.business_id, event:event, eventocc:eventocc});
 						console.log("getonceeventdetaiillsssss");
 						console.log(json);
-						sendTextMessage(sender,"Event: " + JSON.stringify(json.event) + "\n EventOcc: " + JSON.stringify(json.eventocc));
+						sendTextMessage(sender,"Name: " + json.event.name + "\nDescription: " + json.event.description +
+						 "\nDay: "+ json.eventocc.day + "\nTiming: " + json.eventocc.time + "\nPrice: " + json.event.price + 
+						 "\nCapacity: " + json.event.capacity + "\nAvailable: "+json.eventocc.available, token);
 					});
             		// console.log(id);
             		// sendTextMessage(sender, "EVENTID " + eventId,token);
