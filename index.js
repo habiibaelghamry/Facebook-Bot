@@ -284,7 +284,7 @@ app.post('/webhook/', function (req, res) {
             		// sendTextMessage(sender, s, token);
             	// })
                 console.log("ana fl occ");
-                sendTextMessage(sender,'http://54.187.92.64:3000/event/viewO/' + eventId,token)
+                sendTextMessage(sender,'http://localhost:8000/#!/viewOccurences/' + eventId,token)
             }
         }
     }
