@@ -210,7 +210,8 @@ app.post('/webhook/', function (req, res) {
 				{
 					// console.log("Contactsss");
 					// console.log(json);
-					sendTextMessage(sender,"Email: " + json.result.email + "\n Phone numbers: " + json.result.phones,token);
+					sendTextMessage(sender,"Email: " + json.result.email,token);
+					getPhones(sender,json.result.phones);
 				});
             continue
             } 
@@ -467,7 +468,7 @@ function getDailyEvents(sender, events, eventoccs, name) {
 			"image_url": "https://media-cdn.tripadvisor.com/media/photo-s/07/3f/a2/83/icon.jpg",
 			"buttons" : [{
                         "type": "web_url",
-                        "url": "http://54.187.92.64:8000/#!/viewOccurences/"+events[l]._id,
+                        "url": "https://54.187.92.64:8000/#!/viewOccurences/"+events[l]._id,
                         "title": "View Occurrences"
                     }]
 		})
@@ -478,6 +479,42 @@ function getDailyEvents(sender, events, eventoccs, name) {
         	"payload": {
        	    	"template_type": "generic",
             	"elements": elem
+            }
+        }
+    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
+
+
+function getPhones(sender, phones) {
+    messageData = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [{
+                    "title": "Phone Numbers",
+                    "image_url": "https://media-cdn.tripadvisor.com/media/photo-s/07/3f/a2/83/icon.jpg",
+                    "buttons": [
+                    			{
+          						"type":"phone_number",
+          						"title":"Call"+phones[0],
+          						"payload":phones[0]
+       				}]
             }
         }
     }
