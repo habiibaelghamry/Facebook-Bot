@@ -413,8 +413,8 @@ function getOnceEvents(sender, events) {
 
 function getDailyEvents(sender, events, eventoccs, name) {
 	console.log("GET DAILY EVENTS");
-	for(int i = 0; i < events.length; i++)
-		for(int j = 0; j < eventoccs.length; j++)
+	for(var i = 0; i < events.length; i++)
+		for(var j = 0; j < eventoccs.length; j++)
 			if(events[i]._id == eventocc[j].event) {
 				events[i].time = eventocc[j].time;
 				break;
