@@ -183,9 +183,12 @@ app.post('/webhook/', function (req, res) {
             	.then(json => {
             		console.log("Facilities");
             		console.log(json.facilities);
-            		sendTextMessage(sender, JSON.stringify(json.facilities),token);
-            	});
-               
+            		if(facilities.length == 0) {
+            			sendTextMessage(sender, "No Facilities",token);
+            		} else {
+            			getFacilities(sender, json.facilities);
+            		}
+            	});   
             	continue	
             }
 
@@ -219,6 +222,71 @@ var token = "EAABbNRnGzH8BALmi5nfNFdGwx8V1Oodkiu2XChFTZBr01R0YG0b77bpbgbtoI4ZAq4
 function sendTextMessage(sender, text) {
     messageData = {
         text:text
+    }
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {access_token:token},
+        method: 'POST',
+        json: {
+            recipient: {id:sender},
+            message: messageData,
+        }
+    }, function(error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error)
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error)
+        }
+    })
+}
+
+
+function getFacilities(sender, facilities) {
+	var cards = Math.ceil(facilities.length / 3);
+
+	var elem = [];
+	for(var i = 0; i < facilities.length; i+=3) {
+		var buttons = [];
+
+		var facility1 = facilities[i];
+		buttons.push({
+			"type":"postback",
+			"title":facility1.name,
+			payload: "Facility: "+ facility1._id
+		})
+		if(facilities[i+1]){ 
+			var facility2 = facilities[i+1];
+			buttons.push({
+				"type":"postback",
+				"title":facility2.name,
+				payload: "Facility: "+ facility2._id
+			})
+		}
+		if(facilities[i+2]){
+			var facility3 = facilities[i+2];
+			buttons.push({
+				"type":"postback",
+				"title":facility3.name,
+				payload: "Facility: "+ facility3._id
+			})
+		} 
+
+
+		elem.push({
+			"title": "Facilities",
+			"image_url": "https://media-cdn.tripadvisor.com/media/photo-s/07/3f/a2/83/icon.jpg",
+			"buttons" : buttons
+		})
+	}
+
+	messageData = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": elem
+            }
+        }
     }
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
