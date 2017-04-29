@@ -203,7 +203,7 @@ app.post('/webhook/', function (req, res) {
             	.then(res => res.json())
             	.then(json => {
             		// console.log("Facilities");
-            		// console.log(json.facilities);
+            		console.log(json.offers);
             		if((json.offers && json.offers.length == 0) || (!json.offers)) {
             			sendTextMessage(sender, "No Offers",token);
             		} else {
