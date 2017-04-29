@@ -412,7 +412,7 @@ function getOnceEvents(sender, events) {
 //getDailyEvents(sender, json.events, json.eventocc, json.name);
 
 function getDailyEvents(sender, events, eventoccs, name) {
-	console.log("GET DAILY EVENTS");
+	// console.log("GET DAILY EVENTS");
 	for(var i = 0; i < events.length; i++)
 		for(var j = 0; j < eventoccs.length; j++)
 			if(events[i]._id == eventoccs[j].event) {
@@ -440,7 +440,7 @@ function getDailyEvents(sender, events, eventoccs, name) {
     		events[x].days = days.substring(0, days.length-2);
 		}
     }
-    console.log(JSON.stringify(events));
+    // console.log(JSON.stringify(events));
     var cards = events.length;
 
     var elem = [];
@@ -482,6 +482,7 @@ function getDailyEvents(sender, events, eventoccs, name) {
         }
     })
 
+    console.log("e");
 
 }
 
