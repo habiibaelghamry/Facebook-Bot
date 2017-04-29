@@ -515,7 +515,7 @@ function getPhones(sender, phones) {
           						"title":"Call"+phones[0],
           						"payload":phones[0]
        				}]
-            }
+            }]
         }
     }
     request({
@@ -533,6 +533,7 @@ function getPhones(sender, phones) {
             console.log('Error: ', response.body.error)
         }
     })
+}
 }
 
 
