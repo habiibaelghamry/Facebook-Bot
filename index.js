@@ -242,8 +242,9 @@ function sendTextMessage(sender, text) {
 
 
 function getFacilities(sender, facilities) {
+	console.log("ANA FL FACILITY");
 	var cards = Math.ceil(facilities.length / 3);
-
+	console.log(cards);
 	var elem = [];
 	for(var i = 0; i < facilities.length; i+=3) {
 		var buttons = [];
@@ -271,12 +272,15 @@ function getFacilities(sender, facilities) {
 			})
 		} 
 
+		console.log("BUTTONS", buttons);
 
 		elem.push({
 			"title": "Facilities",
 			"image_url": "https://media-cdn.tripadvisor.com/media/photo-s/07/3f/a2/83/icon.jpg",
 			"buttons" : buttons
 		})
+
+		console.log("ELEMS", elem);
 	}
 
 	messageData = {
