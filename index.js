@@ -512,8 +512,8 @@ function getPhones(sender, phones) {
                     "buttons": [
                     			{
           						"type":"phone_number",
-          						"title":"Call"+phones[0],
-          						"payload":phones[0]
+          						"title":"Call "+phones[1],
+          						"payload":phones[1]
        				}]
             }]
         }
